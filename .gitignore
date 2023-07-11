@@ -1,0 +1,7 @@
+# directories
+data_test/
+build/
+
+# vim
+*.swp
+*.swo
