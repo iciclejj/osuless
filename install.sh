@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# TODO: go over user-only vs system-wide install, root install etc
+
 DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-# create osu directory structure
+### CREATE OSU DIRECTORY STRUCTURE
+
 OSU_DIR="$HOME/osu!"
 if ! [ -d "$OSU_DIR" ] ; then
 	mkdir "$OSU_DIR"
@@ -14,9 +17,8 @@ if ! [ -d "$OSU_DIR/Skins" ] ; then
 	mkdir "$OSU_DIR/Skins"
 fi
 
-# INSTALL OSULESS (local config)
-# Mostly system-wide for now. Basically why: https://github.com/JuliaLang/juliaup/issues/247
-# sudo cp "$DIR"/build/osuless /usr/local/bin # remember symlinks to other directories?
+### INSTALL OSULESS (local config)
+
 BIN_PATH="/usr/local/bin/osuless"
 DESKTOP_PATH="/usr/share/applications/osuless.desktop"
 
@@ -32,7 +34,6 @@ desktop_template=$(cat "$DIR/data/osuless.desktop.template")
 desktop_entry="${desktop_template/__BIN_PATH__/$BIN_PATH}"
 echo "$desktop_entry" | sudo tee "$DESKTOP_PATH"
 
-# install custom osz mime-type
+# Install custom osz mime-type
 xdg-mime install --novendor "$DIR/data/osuless.xml"
 xdg-mime default "$(basename "$DESKTOP_PATH")" "application/osz"
-#sudo cp "$DIR/data/mime_package.xml" "/usr/share/mime/packages/osuless.xml"
