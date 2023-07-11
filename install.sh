@@ -27,20 +27,12 @@ echo "$OSU_DIR" | tee "$HOME/.config/osuless/osu_dir.conf"
 
 sudo cp "$DIR/scripts/osuless.sh" "$BIN_PATH" && sudo chmod +x "$BIN_PATH"
 
-# TODO: store this in a file in 'data' dir in this project
-cat <<EOF | sudo tee "$DESKTOP_PATH"
-[Desktop Entry]
-Encoding=UTF-8
-Version=1.0
-Type=Application
-Terminal=false
-Exec=$BIN_PATH
-Name=osuless
-#Icon=/path/to/icon
-EOF
+# Create desktop entry
+desktop_template=$(cat "$DIR/data/osuless.desktop.template")
+desktop_entry="${desktop_template/__BIN_PATH__/$BIN_PATH}"
+echo "$desktop_entry" | sudo tee "$DESKTOP_PATH"
 
 # install custom osz mime-type
 xdg-mime install --novendor "$DIR/data/osuless.xml"
 xdg-mime default "$(basename "$DESKTOP_PATH")" "application/osz"
 #sudo cp "$DIR/data/mime_package.xml" "/usr/share/mime/packages/osuless.xml"
-
