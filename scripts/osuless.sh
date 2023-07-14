@@ -1,10 +1,26 @@
 #!/bin/bash
 
-OSZ_PATH="$1"
 OSU_DIR="$(cat "$HOME"/.config/osuless/osu_dir.conf)"
 SONGS_DIR="$OSU_DIR/Songs/"
 
-DEST="$SONGS_DIR/$(basename -s .osz "$OSZ_PATH")"
+function osuless_install() {
+	osz_path="$1"
+	dest="$SONGS_DIR/$(basename -s .osz "$osz_path")"
+	unzip "$osz_path" -d "$dest"
+	rm "$osz_path"
+}
 
-unzip "$OSZ_PATH" -d "$DEST"
-rm "$OSZ_PATH"
+case $1 in
+	install)
+		osuless_"$1" "${@:2}"
+		;;
+	*.osz)
+		# This is for xdg default application support. AFAIK you can't add a command/arg to it.
+	        #     TODO: Create custom osuless_default script or something as a wrapper for this.
+		osuless_install "$1"
+		;;
+	*)
+		# TODO: osuless_help
+		exit 0
+		;;
+esac
