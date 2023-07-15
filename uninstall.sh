@@ -13,6 +13,8 @@ xdg-mime uninstall "$DIR/data/osuless.xml"
 sudo rm "/usr/local/bin/osuless"
 sudo rm "/usr/share/applications/osuless.desktop"
 
-# Delete osuless directories. TODO: ask, especially about the configs :)
-rm -r "$HOME/.config/osuless/"
-
+# Delete osuless directories.
+read -p "Delete osuless config files? (Y/n)" delete_osuless_config
+case "$delete_osuless_config" in [yY][eE][sS]|[yY])
+        rm -r "$HOME/.config/osuless" ;;
+esac
