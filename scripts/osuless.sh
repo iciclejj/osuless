@@ -36,7 +36,7 @@ function _osuless_reconfigure_update_configs() {
 	echo "$OSULESS_CONFIG_DIR/osu_dir.conf updated..."
 
 	awk -v key="osu_folder" -v value="$osu_dir" 'BEGIN{OFS=" "} $1==key {$2=value} 1' "$MCOSU_DIR/cfg/osu.cfg" > temp && mv temp "$MCOSU_DIR/cfg/osu.cfg"
-	echo "$MCOSU_DIR/cfg/osu.cfg update..."
+	echo "$MCOSU_DIR/cfg/osu.cfg updated..."
 }
 
 function osuless_reconfigure() {
@@ -78,6 +78,8 @@ function osuless_reconfigure() {
 
 	echo "Updating config files..."
 	_osuless_reconfigure_update_configs "$osu_dir"
+
+	echo "Osuless configuration finished."
 }
 
 case $1 in
