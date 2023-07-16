@@ -36,8 +36,12 @@ function _osuless_reconfigure_update_configs() {
 	echo "$osu_dir" | tee "$OSULESS_CONFIG_DIR/osu_dir.conf" >> /dev/null
 	echo "$OSULESS_CONFIG_DIR/osu_dir.conf updated..."
 
-	awk -v key="osu_folder" -v value="$osu_dir" 'BEGIN{OFS=" "} $1==key {$2=value} 1' "$MCOSU_CONFIG_PATH" > temp && mv temp "$MCOSU_CONFIG_PATH"
-	echo "$MCOSU_CONFIG_PATH updated..."
+	if [ -f "$MCOSU_CONFIG_PATH" ]; then
+		awk -v key="osu_folder" -v value="$osu_dir" 'BEGIN{OFS=" "} $1==key {$2=value} 1' "$MCOSU_CONFIG_PATH" > temp && mv temp "$MCOSU_CONFIG_PATH"
+		echo "$MCOSU_CONFIG_PATH updated..."
+	else
+		echo "$MCOSU_CONFIG_PATH not found; skipping..."
+	fi
 }
 
 function osuless_reconfigure() {
