@@ -32,7 +32,7 @@ function _osuless_reconfigure_update_configs() {
 	local osu_dir="$1"
 
 	# set config files
-	echo "$osu_dir" | tee "$OSULESS_CONFIG_DIR/osu_dir.conf"
+	echo "$osu_dir" | tee "$OSULESS_CONFIG_DIR/osu_dir.conf" >> /dev/null
 	echo "$OSULESS_CONFIG_DIR/osu_dir.conf updated..."
 
 	awk -v key="osu_folder" -v value="$osu_dir" 'BEGIN{OFS=" "} $1==key {$2=value} 1' "$MCOSU_DIR/cfg/osu.cfg" > temp && mv temp "$MCOSU_DIR/cfg/osu.cfg"
