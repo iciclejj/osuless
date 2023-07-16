@@ -11,6 +11,7 @@ DEFAULT_OSU_DIR="$HOME/osu!"
 
 STEAM_DIR="$HOME/.steam/steam"
 MCOSU_DIR="$STEAM_DIR/steamapps/common/McOsu"
+MCOSU_CONFIG_PATH="$MCOSU_DIR/cfg/osu.cfg"
 
 function osuless_install() {
 	local osz_path="$1"
@@ -35,8 +36,8 @@ function _osuless_reconfigure_update_configs() {
 	echo "$osu_dir" | tee "$OSULESS_CONFIG_DIR/osu_dir.conf" >> /dev/null
 	echo "$OSULESS_CONFIG_DIR/osu_dir.conf updated..."
 
-	awk -v key="osu_folder" -v value="$osu_dir" 'BEGIN{OFS=" "} $1==key {$2=value} 1' "$MCOSU_DIR/cfg/osu.cfg" > temp && mv temp "$MCOSU_DIR/cfg/osu.cfg"
-	echo "$MCOSU_DIR/cfg/osu.cfg updated..."
+	awk -v key="osu_folder" -v value="$osu_dir" 'BEGIN{OFS=" "} $1==key {$2=value} 1' "$MCOSU_CONFIG_PATH" > temp && mv temp "$MCOSU_CONFIG_PATH"
+	echo "$MCOSU_CONFIG_PATH updated..."
 }
 
 function osuless_reconfigure() {
@@ -44,8 +45,8 @@ function osuless_reconfigure() {
 	local osu_dir=""
 
 	# Get mcosu's selected osu directory
-	if [ -f "$MCOSU_DIR/cfg/osu.cfg" ]; then
-		local mcosu_config_file="$MCOSU_DIR/cfg/osu.cfg"
+	if [ -f "$MCOSU_CONFIG_PATH" ]; then
+		local mcosu_config_file="$MCOSU_CONFIG_PATH"
 		mcosu_osu_dir="$(awk -F ' ' '/^osu_folder/ {print $2}' "$mcosu_config_file")"
 	fi
 
