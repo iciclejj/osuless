@@ -2,8 +2,12 @@
 
 # Get osuless directories
 OSULESS_CONFIG_DIR="$HOME/.config/osuless"
+OSULESS_OSU_DIR=""
+if [ -f "$OSULESS_CONFIG_DIR/osu_dir.conf" ]; then
+	OSULESS_OSU_DIR="$(cat "$HOME"/.config/osuless/osu_dir.conf)"
+fi
+
 DEFAULT_OSU_DIR="$HOME/osu!"
-OSULESS_OSU_DIR="$(cat "$HOME"/.config/osuless/osu_dir.conf)"
 
 STEAM_DIR="$HOME/.steam/steam"
 MCOSU_DIR="$STEAM_DIR/steamapps/common/McOsu"
