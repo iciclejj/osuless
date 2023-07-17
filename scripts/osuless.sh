@@ -15,7 +15,16 @@ MCOSU_CONFIG_PATH="$MCOSU_DIR/cfg/osu.cfg"
 
 function osuless_install() {
 	local osz_path="$1"
-	local dest="$OSULESS_OSU_DIR/Songs/$(basename -s .osz "$osz_path")"
+
+	case $osz_path in
+		*.osz)
+			local dest="$OSULESS_OSU_DIR/Songs/$(basename -s .osz "$osz_path")" ;;
+		*.osk)
+			local dest="$OSULESS_OSU_DIR/Skins/$(basename -s .osk "$osz_path")" ;;
+		*)
+			echo "Can't determine osu filetype. Did you remove the file extension?" ;;
+	esac
+
 	unzip "$osz_path" -d "$dest"
 	rm "$osz_path"
 }
@@ -91,7 +100,7 @@ case $1 in
 	install|reconfigure)
 		osuless_"$1" "${@:2}"
 		;;
-	*.osz)
+	*.osz|*.osk)
 		# This is for xdg default application support. AFAIK you can't add a command/arg to it.
 		#	TODO: Create custom osuless_default script or something as a wrapper for this.
 		osuless_install "$1"

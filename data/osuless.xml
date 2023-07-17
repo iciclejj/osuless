@@ -5,4 +5,9 @@
     <sub-class-of type="application/zip"/>
     <glob pattern="*.osz"/>
   </mime-type>
+  <mime-type type="application/osk">
+    <comment>osu! skin zip file</comment>
+    <sub-class-of type="application/zip"/>
+    <glob pattern="*.osk"/>
+  </mime-type>
 </mime-info>

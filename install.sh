@@ -23,6 +23,7 @@ echo "$desktop_entry" | sudo tee "$DESKTOP_PATH" >> /dev/null
 # Install custom osz mime-type
 xdg-mime install --novendor "$DIR/data/osuless.xml"
 xdg-mime default "$(basename "$DESKTOP_PATH")" "application/osz"
+xdg-mime default "$(basename "$DESKTOP_PATH")" "application/osk"
 
 ### CONFIGURE OSULESS
 $BIN_PATH reconfigure
